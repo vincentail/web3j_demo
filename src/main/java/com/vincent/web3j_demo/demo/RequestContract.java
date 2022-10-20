@@ -1,6 +1,7 @@
 package com.vincent.web3j_demo.demo;
 
 import com.vincent.web3j_demo.contract.RequesterAuthorizerWithAirnode;
+import com.vincent.web3j_demo.utils.HexUtil;
 import org.web3j.crypto.Bip44WalletUtils;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -36,7 +37,7 @@ public class RequestContract {
         }
         long time = expireTime.getTime() / 1000;
         BigInteger expireTimestamp = new BigInteger(String.valueOf(time));
-        RemoteFunctionCall<TransactionReceipt> receiptRemoteFunctionCall = requesterAuthorizerWithAirnode.setWhitelistExpiration("airnodeAddress", com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.decode(endpointId), requester, expireTimestamp);
+        RemoteFunctionCall<TransactionReceipt> receiptRemoteFunctionCall = requesterAuthorizerWithAirnode.setWhitelistExpiration("airnodeAddress", HexUtil.decode(endpointId), requester, expireTimestamp);
         return receiptRemoteFunctionCall.send();
     }
 

@@ -1,4 +1,4 @@
-package com.binance.cloud.dapp.dataprovider.web.utils;
+package com.vincent.web3j_demo.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 

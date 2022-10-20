@@ -40,6 +40,7 @@ public class EcdsaUtils {
 
     /**
      * 根据私钥byte数组生成ECDSA签名私钥:get privateKey
+     *
      * @param privateKey
      * @return
      */
@@ -57,7 +58,7 @@ public class EcdsaUtils {
         ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("prime256v1");
         KeyFactory kf = KeyFactory.getInstance("EC", new BouncyCastleProvider());
         ECNamedCurveSpec params = new ECNamedCurveSpec("prime256v1", spec.getCurve(), spec.getG(), spec.getN());
-        ECPoint point =  ECPointUtil.decodePoint(params.getCurve(), pubKey);
+        ECPoint point = ECPointUtil.decodePoint(params.getCurve(), pubKey);
         ECPublicKeySpec pubKeySpec = new ECPublicKeySpec(point, params);
         ECPublicKey pk = (ECPublicKey) kf.generatePublic(pubKeySpec);
         return pk;
@@ -65,9 +66,10 @@ public class EcdsaUtils {
 
     /**
      * 生成密钥对:generate public and private key
+     *
      * @return
      */
-    public static void generateKeyPair(){
+    public static void generateKeyPair() {
 
         ECKeyPairGenerator generator = new ECKeyPairGenerator();
         ECKeyGenerationParameters keygenParams = new ECKeyGenerationParameters(CURVE, new SecureRandom());
@@ -81,34 +83,35 @@ public class EcdsaUtils {
 
         BigInteger privateParamsD = privateParams.getD();
 
-        System.out.println("private: " + com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.encodeHexString(privateParamsD.toByteArray()));
+        System.out.println("private: " + HexUtil.encodeHexString(privateParamsD.toByteArray()));
 
         byte[] encoded = publicParams.getQ().getEncoded(true);
-        System.out.println("public: " + com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.encodeHexString(encoded));
+        System.out.println("public: " + HexUtil.encodeHexString(encoded));
 
     }
 
 
     /**
      * 签名内容:sign message
+     *
      * @return
      */
 
-    public static String sign(byte[] message,PrivateKey eckey) throws Exception {
+    public static String sign(byte[] message, PrivateKey eckey) throws Exception {
 
         Signature dsa = Signature.getInstance("SHA256withECDSA");
 
         dsa.initSign(eckey);
         dsa.update(message);
 
-        return com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.encodeHexString(dsa.sign());
+        return HexUtil.encodeHexString(dsa.sign());
     }
 
-    public static boolean verify(PublicKey publicKey,String signature,byte[] message) throws Exception {
+    public static boolean verify(PublicKey publicKey, String signature, byte[] message) throws Exception {
         Signature dsa = Signature.getInstance("SHA256withECDSA");
         dsa.initVerify(publicKey);
         dsa.update(message);
-        boolean bool = dsa.verify(com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.decode(signature));
+        boolean bool = dsa.verify(HexUtil.decode(signature));
         return bool;
     }
 
@@ -133,7 +136,7 @@ public class EcdsaUtils {
 //        String origin = HexUtil.encodeHexString(signByte);
 //        System.out.println(origin);
 
-        com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.decode("0398c5929bc3fd5744d6ba86d0379e073456339f98f9c5475d331d657edc52d909");
-        System.out.println("0398c5929bc3fd5744d6ba86d0379e073456339f98f9c5475d331d657edc52d909：length="+"0398c5929bc3fd5744d6ba86d0379e073456339f98f9c5475d331d657edc52d909".length());
+        HexUtil.decode("0398c5929bc3fd5744d6ba86d0379e073456339f98f9c5475d331d657edc52d909");
+        System.out.println("0398c5929bc3fd5744d6ba86d0379e073456339f98f9c5475d331d657edc52d909：length=" + "0398c5929bc3fd5744d6ba86d0379e073456339f98f9c5475d331d657edc52d909".length());
     }
 }

@@ -19,7 +19,7 @@ public class PrivateKeyUtil {
         ECPrivateKey privateKey = PRIVATE_KEY_MAP.get(pri);
         if (privateKey == null) {
             synchronized (pri) {
-                privateKey = EcdsaUtils.generatePrivateKey(com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.decode(pri));
+                privateKey = EcdsaUtils.generatePrivateKey(HexUtil.decode(pri));
                 PRIVATE_KEY_MAP.put(pri,privateKey);
             }
         }

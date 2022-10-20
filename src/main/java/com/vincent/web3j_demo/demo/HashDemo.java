@@ -1,5 +1,6 @@
 package com.vincent.web3j_demo.demo;
 
+import com.vincent.web3j_demo.utils.HexUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.web3j.abi.TypeEncoder;
 import org.web3j.abi.datatypes.Utf8String;
@@ -21,8 +22,8 @@ public class HashDemo {
         }
         String messageKeccak256 = Hash.sha3(message);
         String prefixEncode = TypeEncoder.encodePacked(new Utf8String("\u0019Ethereum Signed Message:\n"));
-        String messageLengthStr = com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.decode(messageKeccak256.replaceAll(HEX_PREFIX, "")).length + "";
-        String messageLengthEncode = com.binance.cloud.dapp.dataprovider.web.utils.HexUtil.encodeHexString(messageLengthStr.getBytes(StandardCharsets.UTF_8));
+        String messageLengthStr = HexUtil.decode(messageKeccak256.replaceAll(HEX_PREFIX, "")).length + "";
+        String messageLengthEncode = HexUtil.encodeHexString(messageLengthStr.getBytes(StandardCharsets.UTF_8));
 
         String concat = prefixEncode + messageLengthEncode + messageKeccak256;
         String hash = Hash.sha3(concat.replaceAll(HEX_PREFIX, ""));
